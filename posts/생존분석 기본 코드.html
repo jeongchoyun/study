@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="정초윤">
+
+<title>study - 생존 분석 기본 코드</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">study</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com" rel="" target=""><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">생존 분석 기본 코드</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>정초윤 </p>
+            </div>
+    </div>
+      
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(moonBook)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survminer)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="no-competing-risk" class="level2">
+<h2 class="anchored" data-anchor-id="no-competing-risk">1. No competing risk</h2>
+<section id="데이터-읽기" class="level3">
+<h3 class="anchored" data-anchor-id="데이터-읽기">1. 데이터 읽기</h3>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> <span class="fu">data.frame</span>(data.table<span class="sc">::</span><span class="fu">fread</span>(<span class="st">"파일명"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="데이터-전처리" class="level3">
+<h3 class="anchored" data-anchor-id="데이터-전처리">2. 데이터 전처리</h3>
+<section id="날짜형-수정" class="level4">
+<h4 class="anchored" data-anchor-id="날짜형-수정">2.1 날짜형 수정</h4>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.Date</span>(<span class="fu">as.character</span>(data1<span class="sc">$</span><span class="st">"문자형 변수명"</span>),<span class="at">format=</span><span class="st">"%Y%m%d"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="범주화" class="level4">
+<h4 class="anchored" data-anchor-id="범주화">2.2 범주화</h4>
+<blockquote class="blockquote">
+<p>기준이 다른 변수들을 한번에 쉽게 코드화 할 수 있는지 공부하기</p>
+</blockquote>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span><span class="st">"변수명"</span> <span class="ot">=</span> <span class="fu">ifelse</span>(data<span class="sc">$</span><span class="st">"변수명"</span> <span class="sc">==</span> <span class="dv">1</span> , <span class="st">"YES"</span>,<span class="st">"NO"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span><span class="st">"변수명"</span> <span class="ot">=</span> <span class="fu">factor</span>(data<span class="sc">$</span><span class="st">"변수명"</span>, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"YES"</span>,<span class="st">"NO"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="table-1" class="level3">
+<h3 class="anchored" data-anchor-id="table-1">3. Table 1</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>t1 <span class="ot">=</span> tableone<span class="sc">::</span><span class="fu">CreateTableOne</span>(<span class="at">vars=</span><span class="fu">c</span>(<span class="st">"변수명 집합"</span>),<span class="at">strata =</span> <span class="st">"기준 변수"</span>,<span class="at">data=</span>data,<span class="at">test=</span>F, <span class="at">addOverall =</span> T)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(print(t1,smd=T),"AnyC_DTH_t1.csv")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="중도-절단-고려한-생존기간-설정" class="level3">
+<h3 class="anchored" data-anchor-id="중도-절단-고려한-생존기간-설정">4. 중도 절단 고려한 생존기간 설정</h3>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(survival)</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Surv</span>(data<span class="sc">$</span><span class="st">"생존 시간 변수"</span>, data<span class="sc">$</span><span class="st">"타겟 변수"</span> <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">Surv</span>(data<span class="sc">$</span><span class="st">"생존 시간 변수"</span>, data<span class="sc">$</span><span class="st">"타겟 변수"</span> <span class="sc">==</span> <span class="dv">1</span>))</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 특정 시간 생존률</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">survfit</span>(<span class="fu">Surv</span>(data<span class="sc">$</span><span class="st">"생존 시간 변수"</span>, data<span class="sc">$</span><span class="st">"타겟 변수"</span> <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> <span class="st">"기준 변수"</span>, <span class="at">data =</span> data), <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)<span class="sc">*</span><span class="fl">365.25</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="kaplan-meiere-function" class="level3">
+<h3 class="anchored" data-anchor-id="kaplan-meiere-function">5. Kaplan-Meiere function</h3>
+<p><code>-</code> 1년 단위 설정</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>xscale <span class="ot">=</span> <span class="st">"d_y"</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>xtrans <span class="ot">&lt;-</span> <span class="cf">switch</span>(xscale,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">d_m =</span> <span class="dv">12</span><span class="sc">/</span><span class="fl">365.25</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">d_y =</span> <span class="dv">1</span><span class="sc">/</span><span class="fl">365.25</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">m_d =</span> <span class="fl">365.25</span><span class="sc">/</span><span class="dv">12</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">m_y =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">12</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y_d =</span> <span class="fl">365.25</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y_m =</span><span class="dv">12</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>                 <span class="dv">1</span>)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>breaks <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">1250</span>,<span class="dv">730</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>-</code> 그래프</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survminer)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot</span>(<span class="fu">survfit</span>(<span class="fu">Surv</span>(data<span class="sc">$</span><span class="st">"생존 시간 변수"</span>, data<span class="sc">$</span><span class="st">"타겟 변수"</span> <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> <span class="st">"기준 변수"</span>,<span class="at">data=</span>data),</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">data=</span> data,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">fun=</span><span class="st">"event"</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">size=</span><span class="dv">1</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"#2E9FDF"</span>,<span class="st">"#df2e46"</span>),</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">censor=</span>F,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">conf.int=</span>T,</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">surv.scale =</span> <span class="st">"percent"</span>,</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">pval =</span> T,</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">pval.coord =</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.2</span>),</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">xscale =</span> <span class="st">"d_y"</span>,</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>            <span class="at">break.x.by =</span> <span class="fl">365.25</span><span class="sc">*</span><span class="dv">2</span>,</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>            <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">3700</span>),</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>            <span class="at">xlab =</span> <span class="st">"Years"</span>,</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>            <span class="at">ylab =</span> <span class="st">"Cumulative incidence probability (%)"</span>,</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend.labs =</span> <span class="fu">c</span>(<span class="st">"대조군"</span>, <span class="st">"실험군"</span>),</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend.title =</span> <span class="st">"Group"</span>,</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend =</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.85</span>),</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>            <span class="at">risk.table =</span> <span class="st">"nrisk_cumevents"</span>,</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>            <span class="at">risk.table.col=</span><span class="st">"기준 변수"</span>,</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>            <span class="at">risk.table.height =</span> <span class="fl">0.2</span>)</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>            <span class="co"># fontsize = 3,</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>            <span class="co"># ggtheme = theme_bw())</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="various-statistical-metrics" class="level3">
+<h3 class="anchored" data-anchor-id="various-statistical-metrics">5. Various statistical metrics</h3>
+<section id="hazard-ratio" class="level4">
+<h4 class="anchored" data-anchor-id="hazard-ratio">5.1 Hazard ratio</h4>
+<blockquote class="blockquote">
+<p>Adjusted와 conditional (Unadjusted와 marginal)은 자세히 공부하면 상호교환 가능 단어가 아니라는 논문이 있지만 여기서는 같은 의미로 작성함.</p>
+</blockquote>
+<p><code>-</code> Unadjusted HR</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(moonBook)</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>out <span class="ot">=</span> <span class="fu">mycph</span>(<span class="fu">Surv</span>(data<span class="sc">$</span><span class="st">"생존 시간 변수"</span>, data<span class="sc">$</span><span class="st">"타겟 변수"</span> <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> ., <span class="at">data=</span>data)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">HRplot</span>(out)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>coef <span class="ot">=</span> out</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="fu">paste0</span>(<span class="fu">sprintf</span>(<span class="st">"%.2f"</span>,coef[row,<span class="dv">1</span>]),<span class="st">"("</span>, <span class="fu">sprintf</span>(<span class="st">"%.2f"</span>,coef[row,<span class="dv">2</span>]),<span class="st">"-"</span>, <span class="fu">sprintf</span>(<span class="st">"%.2f"</span>,coef[row,<span class="dv">3</span>]),<span class="st">")"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>-</code> Adjusted HR</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>out2 <span class="ot">=</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(data<span class="sc">$</span><span class="st">"생존 시간 변수"</span>, data<span class="sc">$</span><span class="st">"타겟 변수"</span> <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> ., <span class="at">data=</span>data)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">HRplot</span>(out2,<span class="at">show.CI=</span>T)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>coef <span class="ot">=</span> <span class="fu">summary</span>(out2)<span class="sc">$</span>coefficients</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>coef[row,<span class="dv">2</span>]</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(coef[row,<span class="dv">1</span>]<span class="sc">-</span><span class="fl">1.96</span><span class="sc">*</span>coef[row,<span class="dv">3</span>])</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(coef[row,<span class="dv">1</span>]<span class="sc">+</span><span class="fl">1.96</span><span class="sc">*</span>coef[row,<span class="dv">3</span>])</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="fu">paste0</span>(<span class="fu">round</span>(coef[row,<span class="dv">2</span>],<span class="dv">2</span>),<span class="st">"("</span>, <span class="fu">round</span>(<span class="fu">exp</span>(coef[row,<span class="dv">1</span>]<span class="sc">-</span><span class="fl">1.96</span><span class="sc">*</span>coef[row,<span class="dv">3</span>]),<span class="dv">2</span>),<span class="st">"-"</span>, <span class="fu">round</span>(<span class="fu">exp</span>(coef[row,<span class="dv">1</span>]<span class="sc">+</span><span class="fl">1.96</span><span class="sc">*</span>coef[row,<span class="dv">3</span>]),<span class="dv">2</span>),<span class="st">")"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="p-for-interaction" class="level4">
+<h4 class="anchored" data-anchor-id="p-for-interaction">5.2 p for interaction</h4>
+<p><code>-</code> Unadjusted interaction</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">=</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(data<span class="sc">$</span><span class="st">"생존 시간 변수"</span>, data<span class="sc">$</span><span class="st">"타겟 변수"</span> <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> <span class="st">"변수1"</span> <span class="sc">+</span> <span class="st">"변수2"</span>, <span class="at">data =</span> data)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">=</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(data<span class="sc">$</span><span class="st">"생존 시간 변수"</span>, data<span class="sc">$</span><span class="st">"타겟 변수"</span> <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> <span class="st">"변수1"</span> <span class="sc">+</span> <span class="st">"변수2"</span> <span class="sc">+</span> <span class="st">"변수1"</span><span class="sc">:</span><span class="st">"변수2"</span>, <span class="at">data =</span> data)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>interaction <span class="ot">=</span> <span class="fu">anova</span>(fit1, fit2)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>interaction<span class="sc">$</span><span class="st">`</span><span class="at">Pr(&gt;|Chi|)</span><span class="st">`</span>[<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>-</code> Adjusted interaction</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">=</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(data<span class="sc">$</span><span class="st">"생존 시간 변수"</span>, data<span class="sc">$</span><span class="st">"타겟 변수"</span> <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> ., <span class="at">data =</span> data)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">=</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(data<span class="sc">$</span><span class="st">"생존 시간 변수"</span>, data<span class="sc">$</span><span class="st">"타겟 변수"</span> <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> . <span class="sc">+</span> AnyC_<span class="sc">:</span>Sex_, <span class="at">data =</span> data)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>interaction <span class="ot">=</span> <span class="fu">anova</span>(a, b)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>interaction<span class="sc">$</span><span class="st">`</span><span class="at">Pr(&gt;|Chi|)</span><span class="st">`</span>[<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="person-year" class="level4">
+<h4 class="anchored" data-anchor-id="person-year">5.3 10000 person-year</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>py10000 <span class="ot">=</span> <span class="fu">sum</span>(data[data[,colName]<span class="sc">==</span>con,]<span class="sc">$</span><span class="st">"타겟 변수"</span>) <span class="sc">/</span> (<span class="fu">sum</span>(<span class="fu">as.numeric</span>(data[data[,colName]<span class="sc">==</span>con,]<span class="sc">$</span><span class="st">"생존 시간 변수"</span>)) <span class="sc">/</span> <span class="dv">365</span>)<span class="sc">*</span><span class="dv">10000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="smd" class="level4">
+<h4 class="anchored" data-anchor-id="smd">5.4 SMD</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>tableone<span class="sc">::</span><span class="fu">ExtractSmd</span>(tableone<span class="sc">::</span><span class="fu">CreateCatTable</span>(<span class="fu">c</span>(<span class="st">"변수명 집합"</span>),<span class="st">"기준 변수"</span>,<span class="at">data=</span>data))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="competing-risk" class="level2">
+<h2 class="anchored" data-anchor-id="competing-risk">2. Competing risk</h2>
+<p><code>-</code> 경쟁 위험은 타겟 별 원인 변수가 필요함<br>
+<code>-</code> library(cmprsk) crr() 함수</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cmprsk)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>-</code> Subdistribution hazard ratio</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 모델에 들어갈 변수 cbind</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>cov.mat <span class="ot">=</span> <span class="fu">cbind</span>(data<span class="sc">$</span><span class="st">"변수명"</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>crr<span class="fl">.1</span> <span class="ot">=</span> <span class="fu">crr</span>(data<span class="sc">$</span><span class="st">"생존기간 변수"</span>,data<span class="sc">$</span><span class="st">"원인 별 변수"</span>,cov.mat, <span class="at">failcode =</span> <span class="st">"관심 원인 값"</span>,<span class="at">cencode=</span><span class="st">"중도 절단 값"</span>)<span class="er">)</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>Subdistribution_coef <span class="ot">=</span> <span class="fu">summary</span>(crr<span class="fl">.1</span>)<span class="sc">$</span>coef</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(Subdistribution_coef[<span class="dv">1</span>,<span class="dv">2</span>], <span class="st">"("</span>, <span class="fu">exp</span>(Subdistribution_coef[<span class="dv">1</span>,<span class="dv">1</span>]<span class="sc">-</span><span class="fl">1.96</span><span class="sc">*</span>Subdistribution_coef[<span class="dv">1</span>,<span class="dv">3</span>]),<span class="st">"-"</span>, <span class="fu">exp</span>(Subdistribution_coef[<span class="dv">1</span>,<span class="dv">1</span>]<span class="sc">+</span><span class="fl">1.96</span><span class="sc">*</span>Subdistribution_coef[<span class="dv">1</span>,<span class="dv">3</span>]),<span class="st">")"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>-</code> cause‐specific hazard ratio</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>coxph<span class="fl">.1</span> <span class="ot">=</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(data<span class="sc">$</span><span class="st">"생존기간 변수"</span>, data<span class="sc">$</span><span class="st">"원인 별 변수"</span> <span class="sc">==</span> <span class="st">"관심 원인 값"</span>) <span class="sc">~</span> data<span class="sc">$</span><span class="st">"기준 변수"</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>cause_coef <span class="ot">=</span> <span class="fu">summary</span>(crr<span class="fl">.1</span>)<span class="sc">$</span>coef</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(cause_coef[<span class="dv">1</span>,<span class="dv">2</span>], <span class="st">"("</span>, <span class="fu">exp</span>(cause_coef[<span class="dv">1</span>,<span class="dv">1</span>]<span class="sc">-</span><span class="fl">1.96</span><span class="sc">*</span>cause_coef[<span class="dv">1</span>,<span class="dv">3</span>]),<span class="st">"-"</span>, <span class="fu">exp</span>(cause_coef[<span class="dv">1</span>,<span class="dv">1</span>]<span class="sc">+</span><span class="fl">1.96</span><span class="sc">*</span>cause_coef[<span class="dv">1</span>,<span class="dv">3</span>]),<span class="st">")"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>-</code> Cumulative incidence function &gt; 정리 필요</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>TS <span class="ot">=</span> <span class="fu">Surv</span>(data<span class="sc">$</span>survDt, data<span class="sc">$</span>isDTH <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># summary(data$TS)</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># summary(survfit(TS~AnyC_,data=data), c(1,3)*365.25)</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>TSCol <span class="ot">=</span> <span class="fu">grep</span>(<span class="st">"TS"</span>,<span class="fu">names</span>(data))</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>cif1 <span class="ot">&lt;-</span> <span class="fu">cuminc</span>(<span class="at">ftime=</span>data<span class="sc">$</span><span class="st">"생존기간 변수"</span>,<span class="at">fstatus=</span>data<span class="sc">$</span><span class="st">"원인 별 변수"</span>, data<span class="sc">$</span><span class="st">"기준 변수"</span>, <span class="at">cencode=</span><span class="st">"중도 절단 값"</span>) </span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">survfit</span>(<span class="fu">Surv</span>(data<span class="sc">$</span><span class="st">"생존시간변수"</span>, data<span class="sc">$</span>isDTH <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> <span class="st">"기준 변수"</span>, <span class="at">data=</span>data)<span class="sc">$</span>time, <span class="dv">1</span> <span class="sc">-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(data<span class="sc">$</span><span class="st">"생존시간변수"</span>, data<span class="sc">$</span>isDTH <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> <span class="st">"기준 변수"</span>,<span class="at">data=</span>data)<span class="sc">$</span>surv, <span class="at">ylab=</span><span class="st">"Probability"</span>)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(cif1<span class="sc">$</span><span class="st">`</span><span class="at">"기준 변수1" 1</span><span class="st">`</span><span class="sc">$</span>time, cif1<span class="sc">$</span><span class="st">`</span><span class="at">"기준 변수1" 1</span><span class="st">`</span><span class="sc">$</span>est, <span class="at">type=</span><span class="st">"l"</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">3</span>), <span class="at">xlab=</span><span class="st">"Survival time (days)"</span>,<span class="at">ylab=</span><span class="st">"Probability"</span>, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">lty=</span><span class="dv">1</span>,<span class="at">col=</span><span class="st">"black"</span>) </span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(cif1<span class="sc">$</span><span class="st">`</span><span class="at">"기준 변수2" 1</span><span class="st">`</span><span class="sc">$</span>time, cif1<span class="sc">$</span><span class="st">`</span><span class="at">"기준 변수2" 1</span><span class="st">`</span><span class="sc">$</span>est, <span class="at">type=</span><span class="st">"l"</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">0.3</span>), <span class="at">xlab=</span><span class="st">"Survival time (days)"</span>,<span class="at">ylab=</span><span class="st">"Probability"</span>, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">lty=</span><span class="dv">1</span>,<span class="at">col=</span><span class="st">"orange"</span>)</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(cif1<span class="sc">$</span><span class="st">`</span><span class="at">"기준 변수1" 2</span><span class="st">`</span><span class="sc">$</span>time, cif1<span class="sc">$</span><span class="st">`</span><span class="at">"기준 변수1" 2</span><span class="st">`</span><span class="sc">$</span>est, <span class="at">type=</span><span class="st">"l"</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">0.3</span>), <span class="at">xlab=</span><span class="st">"Survival time (days)"</span>,<span class="at">ylab=</span><span class="st">"Probability"</span>, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">lty=</span><span class="dv">1</span>,<span class="at">col=</span><span class="st">"blue"</span>) </span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(cif1<span class="sc">$</span><span class="st">`</span><span class="at">"기준 변수2" 2</span><span class="st">`</span><span class="sc">$</span>time, cif1<span class="sc">$</span><span class="st">`</span><span class="at">"기준 변수2" 2</span><span class="st">`</span><span class="sc">$</span>est, <span class="at">type=</span><span class="st">"l"</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">0.3</span>), <span class="at">xlab=</span><span class="st">"Survival time (days)"</span>,<span class="at">ylab=</span><span class="st">"Probability"</span>, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">lty=</span><span class="dv">1</span>,<span class="at">col=</span><span class="st">"red"</span>) </span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">"Figure 1. Cumulative Incidence functions"</span>)</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"All-cause death (1-KM)/Sum of two CIFs"</span>,<span class="st">"Top5"</span>, <span class="st">"others"</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"black"</span>,<span class="st">"orange"</span>,<span class="st">"red"</span>), <span class="at">bty=</span><span class="st">"n"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

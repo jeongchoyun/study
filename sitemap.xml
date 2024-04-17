@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://jeongchoyun.github.io/study/생존분석 기본 코드.html</loc>
-    <lastmod>2024-04-17T06:14:59.527Z</lastmod>
+    <loc>https://jeongchoyun.github.io/study/about.html</loc>
+    <lastmod>2024-04-17T06:16:36.924Z</lastmod>
   </url>
   <url>
-    <loc>https://jeongchoyun.github.io/study/머신러닝기본 코드.html</loc>
-    <lastmod>2024-04-17T06:14:58.775Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jeongchoyun.github.io/study/posts/welcome/index.html</loc>
-    <lastmod>2024-04-17T06:14:57.863Z</lastmod>
+    <loc>https://jeongchoyun.github.io/study/posts/생존분석 기본 코드.html</loc>
+    <lastmod>2024-04-17T06:16:36.252Z</lastmod>
   </url>
   <url>
     <loc>https://jeongchoyun.github.io/study/posts/post-with-code/index.html</loc>
-    <lastmod>2024-04-17T06:14:57.599Z</lastmod>
+    <lastmod>2024-04-17T06:16:35.460Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jeongchoyun.github.io/study/posts/머신러닝기본 코드.html</loc>
+    <lastmod>2024-04-17T06:16:35.196Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jeongchoyun.github.io/study/posts/welcome/index.html</loc>
+    <lastmod>2024-04-17T06:16:35.716Z</lastmod>
   </url>
   <url>
     <loc>https://jeongchoyun.github.io/study/index.html</loc>
-    <lastmod>2024-04-17T06:14:58.247Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jeongchoyun.github.io/study/about.html</loc>
-    <lastmod>2024-04-17T06:14:59.007Z</lastmod>
+    <lastmod>2024-04-17T06:16:36.692Z</lastmod>
   </url>
 </urlset>
