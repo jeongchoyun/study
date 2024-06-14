@@ -32,14 +32,14 @@
     "href": "posts/Untitled.html",
     "title": "test",
     "section": "",
-    "text": "확률변수 \\(X\\)가 임의의 실수 \\(x\\)에 대하여 \\(P(X=x)=0\\)을 만족\n몇가지 중요한 확률변수에 대하여 확률분포함수를 구하고 평균, 분산 등을 통해 각 변수의 성격 파악\n\n\n확률변수 \\(X\\)가 실구간(a,b)에 상에 균일하게 분포되어 있을 때 그의 확률 밀도 함수 \\(f(x)\\)는 \\[\nf(x)=\\frac{1}{b-a}, \\quad a\\leq x \\leq b\n\\] 이고 \\[\nX \\sim U(a,b)\n\\]\n\n\n\nwikipedia\n\n\n또한 누적확률분포 함수 \\(F(x)\\)는 \\[\nF(x)=\n\\int_{-\\infty}^x f(y)dy =\n\\int_{-\\infty}^x \\frac{1}{b-a}I_{(a,b)}(y)dy =\n\\frac{x-a}{b-a}\n\\]\n\n\n\nwikipedia\n\n\n\n\n\n\n\n."
+    "text": "확률변수 \\(X\\)가 임의의 실수 \\(x\\)에 대하여 \\(P(X=x)=0\\)을 만족\n몇가지 중요한 확률변수에 대하여 확률분포함수를 구하고 평균, 분산 등을 통해 각 변수의 성격 파악\n\n\n확률변수 \\(X\\)가 실구간(a,b)에 상에 균일하게 분포되어 있을 때 그의 확률 밀도 함수 \\(f(x)\\)는 \\[\nf(x)=\\frac{1}{b-a}, \\quad a\\leq x \\leq b\n\\] 이고 \\[\nX \\sim U(a,b)\n\\]\n\n\n\nwikipedia\n\n\n또한 누적확률분포 함수 \\(F(x)\\)는 \\[\nF(x)=\n\\int_{-\\infty}^x f(y)dy =\n\\int_{-\\infty}^x \\frac{1}{b-a}I_{(a,b)}(y)dy =\n\\frac{x-a}{b-a}\n\\]\n\n\n\nwikipedia"
   },
   {
     "objectID": "posts/Untitled.html#균일-분포",
     "href": "posts/Untitled.html#균일-분포",
     "title": "test",
     "section": "",
-    "text": "확률변수 \\(X\\)가 실구간(a,b)에 상에 균일하게 분포되어 있을 때 그의 확률 밀도 함수 \\(f(x)\\)는 \\[\nf(x)=\\frac{1}{b-a}, \\quad a\\leq x \\leq b\n\\] 이고 \\[\nX \\sim U(a,b)\n\\]\n\n\n\nwikipedia\n\n\n또한 누적확률분포 함수 \\(F(x)\\)는 \\[\nF(x)=\n\\int_{-\\infty}^x f(y)dy =\n\\int_{-\\infty}^x \\frac{1}{b-a}I_{(a,b)}(y)dy =\n\\frac{x-a}{b-a}\n\\]\n\n\n\nwikipedia\n\n\n\n\n\n\n\n."
+    "text": "확률변수 \\(X\\)가 실구간(a,b)에 상에 균일하게 분포되어 있을 때 그의 확률 밀도 함수 \\(f(x)\\)는 \\[\nf(x)=\\frac{1}{b-a}, \\quad a\\leq x \\leq b\n\\] 이고 \\[\nX \\sim U(a,b)\n\\]\n\n\n\nwikipedia\n\n\n또한 누적확률분포 함수 \\(F(x)\\)는 \\[\nF(x)=\n\\int_{-\\infty}^x f(y)dy =\n\\int_{-\\infty}^x \\frac{1}{b-a}I_{(a,b)}(y)dy =\n\\frac{x-a}{b-a}\n\\]\n\n\n\nwikipedia"
   },
   {
     "objectID": "posts/머신러닝기본 코드.html",
