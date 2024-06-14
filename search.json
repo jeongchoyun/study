@@ -32,14 +32,14 @@
     "href": "posts/Untitled.html",
     "title": "test",
     "section": "",
-    "text": "확률변수 \\(X\\)가 임의의 실수 \\(x\\)에 대하여 \\(P(X=x)=0\\)을 만족\n몇가지 중요한 확률변수에 대하여 확률분포함수를 구하고 평균, 분산 등을 통해 각 변수의 성격 파악\n\n\n확률변수 \\(X\\)가 실구간(a,b)에 상에 균일하게 분포되어 있을 때 그의 확률 밀도 함수 \\(f(x)\\)는 \\[\nf(x)=\\frac{1}{b-a}, \\quad a\\leq x \\leq b\n\\] 이고 \\[\nX \\sim U(a,b)\n\\]\n\n&lt;img src=\"Untitled_files/figure-html/2b5b3f99-7641-4270-b0b2-eaefbce9e34b-1-266dcb63-0f4e-4657-9b76-988b00088cea.png\"&gt;\n &gt; &gt;\n또한 누적확률분포 함수 \\(F(x)\\)는 \\[\nF(x)=\n\\int_{-\\infty}^x f(y)dy =\n\\int_{-\\infty}^x \\frac{1}{b-a}I_{(a,b)}(y)dy =\n\\frac{x-a}{b-a}\n\\]\n\n&lt;img src=\"Untitled_files/figure-html/5be9e879-8b0f-4c1e-b439-ddd7281092df-1-8b5654ad-fd50-403d-811a-fb0c6129d3bf.png\"&gt;\n\n\\[\nf(x)=\\int_a^b \\frac{x}{b-a}dx =\n\\frac{b+a}{2}\n\\]\n균일분포의 기댓값과 분산\n\n\n\nKakaoTalk_20240614_205952905.jpg"
+    "text": "확률변수 \\(X\\)가 임의의 실수 \\(x\\)에 대하여 \\(P(X=x)=0\\)을 만족\n몇가지 중요한 확률변수에 대하여 확률분포함수를 구하고 평균, 분산 등을 통해 각 변수의 성격 파악\n\n\n확률변수 \\(X\\)가 실구간(a,b)에 상에 균일하게 분포되어 있을 때 그의 확률 밀도 함수 \\(f(x)\\)는 \\[\nf(x)=\\frac{1}{b-a}, \\quad a\\leq x \\leq b\n\\] 이고 \\[\nX \\sim U(a,b)\n\\]\n\n\n\nwikipedia\n\n\n또한 누적확률분포 함수 \\(F(x)\\)는 \\[\nF(x)=\n\\int_{-\\infty}^x f(y)dy =\n\\int_{-\\infty}^x \\frac{1}{b-a}I_{(a,b)}(y)dy =\n\\frac{x-a}{b-a}\n\\]\n\n\n\nwikipedia\n\n\n\n\n\n\n\n."
   },
   {
     "objectID": "posts/Untitled.html#균일-분포",
     "href": "posts/Untitled.html#균일-분포",
     "title": "test",
     "section": "",
-    "text": "확률변수 \\(X\\)가 실구간(a,b)에 상에 균일하게 분포되어 있을 때 그의 확률 밀도 함수 \\(f(x)\\)는 \\[\nf(x)=\\frac{1}{b-a}, \\quad a\\leq x \\leq b\n\\] 이고 \\[\nX \\sim U(a,b)\n\\]\n\n&lt;img src=\"Untitled_files/figure-html/2b5b3f99-7641-4270-b0b2-eaefbce9e34b-1-266dcb63-0f4e-4657-9b76-988b00088cea.png\"&gt;\n &gt; &gt;\n또한 누적확률분포 함수 \\(F(x)\\)는 \\[\nF(x)=\n\\int_{-\\infty}^x f(y)dy =\n\\int_{-\\infty}^x \\frac{1}{b-a}I_{(a,b)}(y)dy =\n\\frac{x-a}{b-a}\n\\]\n\n&lt;img src=\"Untitled_files/figure-html/5be9e879-8b0f-4c1e-b439-ddd7281092df-1-8b5654ad-fd50-403d-811a-fb0c6129d3bf.png\"&gt;\n\n\\[\nf(x)=\\int_a^b \\frac{x}{b-a}dx =\n\\frac{b+a}{2}\n\\]\n균일분포의 기댓값과 분산\n\n\n\nKakaoTalk_20240614_205952905.jpg"
+    "text": "확률변수 \\(X\\)가 실구간(a,b)에 상에 균일하게 분포되어 있을 때 그의 확률 밀도 함수 \\(f(x)\\)는 \\[\nf(x)=\\frac{1}{b-a}, \\quad a\\leq x \\leq b\n\\] 이고 \\[\nX \\sim U(a,b)\n\\]\n\n\n\nwikipedia\n\n\n또한 누적확률분포 함수 \\(F(x)\\)는 \\[\nF(x)=\n\\int_{-\\infty}^x f(y)dy =\n\\int_{-\\infty}^x \\frac{1}{b-a}I_{(a,b)}(y)dy =\n\\frac{x-a}{b-a}\n\\]\n\n\n\nwikipedia\n\n\n\n\n\n\n\n."
   },
   {
     "objectID": "posts/머신러닝기본 코드.html",
