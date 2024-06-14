@@ -2,10 +2,9 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/Untitled.html",
       "/posts/머신러닝기본 코드.html",
-      "/posts/생존분석 기본 코드.html",
-      "/posts/post-with-code/index.html",
-      "/posts/welcome/index.html"
+      "/posts/생존분석 기본 코드.html"
     ]
   }
 ]
