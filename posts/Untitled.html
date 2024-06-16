@@ -144,6 +144,9 @@ ul.task-list li input[type="checkbox"] {
 <p>몇가지 중요한 확률변수에 대하여 확률분포함수를 구하고 평균, 분산 등을 통해 각 변수의 성격 파악</p>
 <section id="균일-분포" class="level2">
 <h2 class="anchored" data-anchor-id="균일-분포">2.6.1 균일 분포</h2>
+<ul>
+<li>확률밀도함수</li>
+</ul>
 <p>확률변수 <span class="math inline">\(X\)</span>가 실구간(a,b)에 상에 균일하게 분포되어 있을 때 그의 확률 밀도 함수 <span class="math inline">\(f(x)\)</span>는 <span class="math display">\[
 f(x)=\frac{1}{b-a}, \quad a\leq x \leq b
 \]</span> 이고 <span class="math display">\[
@@ -155,6 +158,9 @@ X \sim U(a,b)
 <figcaption class="figure-caption">wikipedia</figcaption>
 </figure>
 </div>
+<ul>
+<li>누적확률분포함수</li>
+</ul>
 <p>또한 누적확률분포 함수 <span class="math inline">\(F(x)\)</span>는 <span class="math display">\[
 F(x)=
 \int_{-\infty}^x f(y)dy =
@@ -167,13 +173,29 @@ F(x)=
 <figcaption class="figure-caption">wikipedia</figcaption>
 </figure>
 </div>
-<section id="균일분포의-기댓값과-분산" class="level3">
-<h3 class="anchored" data-anchor-id="균일분포의-기댓값과-분산">2. 균일분포의 기댓값과 분산</h3>
-<p><img src="attachment:8eb4ecc0-6fef-4bcf-b15f-f1ae724bcdc3.jpg" alt="." style="float: left;"></p>
-<p><img src="attachment:df63f514-118d-4c71-867f-569ad9615ba0.png" alt="wikipedia" style="float: left;"></p>
+<ul>
+<li>기댓값과 분산</li>
+</ul>
+<p><span class="math display">\[\begin{align*}
+E(X)
+&amp;= \int_a^b xf(x)dx \\
+&amp;= \int_a^b x\frac{1}{b-a}dx \\
+&amp;= \left[ \frac{1}{b-a}\frac{1}{2}x^2 \right]_{a}^{b}\\
+&amp;= \frac{1}{b-a}\frac{1}{2}(b^2-a^2)\\
+&amp;= \frac{1}{2}(a+b)\\
+\end{align*}\]</span></p>
+<p><span class="math display">\[\begin{align*}
+V(X)
+&amp;= E(X^2)-{E(X)}^2 \\
+&amp;= \int_a^b x^2\frac{1}{b-a}dx - (\frac{1}{2}(a+b))^2 \\
+&amp;= \left[ \frac{1}{b-a}\frac{1}{2}x^2 \right]_{a}^{b}\\
+&amp;= \frac{1}{3}\frac{1}{b-a}(b^3-a^3)-\frac{1}{4}(a+b)^2\\
+&amp;= \frac{1}{3}\frac{1}{b-a}(b-a)(a^2+ab+b^2)-\frac{1}{4}(a+b)^2\\
+&amp;= \frac{4}{12}(a^2+ab+b^2)-\frac{3}{12}(a^2+2ab+b^2)\\
+&amp;= \frac{1}{12}(a-b)^2\\
+\end{align*}\]</span></p>
 
 
-</section>
 </section>
 </section>
 
